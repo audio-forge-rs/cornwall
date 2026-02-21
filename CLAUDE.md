@@ -11,24 +11,30 @@ You are the user interface for a CLI-based DAW. The human talks to you in natura
 ## Project Layout
 
 ```
-scripts/        <- All capabilities. Each script has --help. Grouped by domain.
+cornwall/       <- Python package. Shared state management and audio logic.
+scripts/        <- CLI entry points. Each script has --help. Grouped by domain.
 state/          <- JSON files tracking project state (tracks, effects, mix settings)
 projects/       <- User's music projects (audio files, rendered output)
 docs/           <- Research and reference (also future GitHub Pages site)
 ```
 
-## Scripts Convention
+## Scripts (Python)
 
-Scripts are the canonical source of what Cornwall can do. Every script:
+Scripts are the canonical source of what Cornwall can do. All Python.
 
-- Lives in `scripts/`
-- Has a `--help` flag documenting all commands and options
-- Groups related functionality under subcommands (e.g., `scripts/track.sh add`, `scripts/track.sh solo 1`)
-- Reads/writes state from `state/` as JSON
-- Outputs results to stdout (human-readable by default, `--json` flag where useful)
-- Is executable and has a shebang line
+- `scripts/project.py` - Create/open/configure projects (BPM, sample rate, time sig)
+- `scripts/track.py` - Add/list/remove/solo/mute/volume/pan/rename/import tracks
+- `scripts/play.py` - Play tracks, render mixes, loop in background, stop
+- `scripts/fx.py` - Effects chains: add/remove/list/clear/preview, effect catalog
+- `scripts/synth.py` - Generate sounds: tones, noise, chords, drums, bytebeat, csound
 
-**Discovering capabilities:** Run `ls scripts/` then `scripts/SCRIPT --help` for any script. Do this when the user asks for something you haven't done before in this session.
+Every script uses argparse with subcommands and `--help`. Run `python3 scripts/SCRIPT.py --help`.
+
+Shared logic lives in `cornwall/` package:
+- `cornwall/state.py` - All JSON state read/write, track/effect/project CRUD
+- `cornwall/sox_effects.py` - Translate effects chains to SoX CLI arguments
+
+**Discovering capabilities:** Run `ls scripts/` then `python3 scripts/SCRIPT.py --help`. Do this when the user asks for something you haven't done before in this session.
 
 ## Installed Tools (Core)
 

@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.DS_Store
+state/*.json
+state/.playback.pid
+projects/*/audio/
+projects/*/mix.wav
+*.wav
+*.mp3
+*.flac
+*.ogg
+*.aiff
