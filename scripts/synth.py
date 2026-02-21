@@ -111,6 +111,7 @@ def _play_file(path: str):
 
 def _sox_synth(output: str, duration: float, volume: float, synth_args: list[str]):
     """Use SoX to generate synthesis."""
+    Path(output).parent.mkdir(parents=True, exist_ok=True)
     cmd = [
         "sox", "-n", "-r", str(SAMPLE_RATE), "-b", "16", output,
         "synth", str(duration),

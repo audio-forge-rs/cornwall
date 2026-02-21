@@ -144,7 +144,8 @@ def cmd_import(args):
     audio_dir.mkdir(parents=True, exist_ok=True)
 
     dest = audio_dir / src.name
-    shutil.copy2(src, dest)
+    if src != dest:
+        shutil.copy2(src, dest)
     track = state.update_track(args.id, source=str(dest))
     print(f"Imported '{src.name}' to track {args.id} '{track['name']}'")
 
