@@ -65,9 +65,15 @@ Scripts read and write these files. You read them to understand the current stat
 
 ## Audio Playback
 
-- `play` (from SoX) for playing audio files through headphones
-- `afplay` (macOS built-in) as fallback
-- Always let the user hear what's happening. After rendering, offer to play it.
+Two modes:
+
+**Quick playback (from Claude Code):** `python3 scripts/play.py track 1` or `play somefile.wav` (SoX). Good for one-shot previews.
+
+**Player TUI (separate terminal):** The user runs `./cornwall-player` in another terminal. It's a Ratatui app showing transport (bar.beat, time, BPM), level meters, and track list. Spacebar to play/stop, L to toggle loop. It reads state/ JSON and writes `state/.player.json` with its current status.
+
+**Querying the player from Claude Code:** `python3 scripts/player.py status` reads `state/.player.json` to check if audio is playing, what bar we're on, levels, etc. Use this to make decisions about timing.
+
+**Building the player:** `cd player && cargo build --release` then `cp target/release/cornwall-player ../`
 
 ## Plugin Access (AU/VST3/CLAP)
 

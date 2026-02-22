@@ -3,10 +3,18 @@ __pycache__/
 .DS_Store
 state/*.json
 state/.playback.pid
+state/.player.json
 projects/*/audio/
 projects/*/mix.wav
+projects/*/csd/
 *.wav
 *.mp3
 *.flac
 *.ogg
 *.aiff
+
+# Rust build artifacts
+player/target/
+
+# Binary (built from player/)
+cornwall-player
